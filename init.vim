@@ -128,11 +128,11 @@ noremap <LEADER>rc :e $HOME/.config/nvim/init.vim<CR>
 noremap <LEADER>rv :e .nvimrc<CR>
 
 " Undo operations
-noremap l u
+"noremap l u
 
 " Insert Key
-noremap k i
-noremap K I
+"noremap k i
+"noremap K I
 
 " make Y to copy till the end of the line
 nnoremap Y y$
@@ -172,37 +172,37 @@ noremap <silent> <LEADER>o za
 " < n   i >
 "     e
 "     v
-noremap <silent> u k
-noremap <silent> n h
-noremap <silent> e j
-noremap <silent> i l
-noremap <silent> gu gk
-noremap <silent> ge gj
+noremap <silent> k k
+noremap <silent> h h
+noremap <silent> j j
+noremap <silent> l l
+noremap <silent> gk gk
+noremap <silent> gj gj
 noremap <silent> \v v$h
 
-" U/E keys for 5 times u/e (faster navigation)
-noremap <silent> U 5k
-noremap <silent> E 5j
+" K/J keys for 5 times k/j (faster navigation)
+noremap <silent> K 5k
+noremap <silent> J 5j
 
 " N key: go to the start of the line
-noremap <silent> N 0
+"noremap <silent> N 0
 " I key: go to the end of the line
-noremap <silent> I $
+"noremap <silent> I $
 
 " Faster in-line navigation
 noremap W 5w
 noremap B 5b
 
 " set h (same as n, cursor left) to 'end of word'
-noremap h e
+"noremap h e
 
-" Ctrl + U or E will move up/down the view port without moving the cursor
-noremap <C-U> 5<C-y>
-noremap <C-E> 5<C-e>
+" Ctrl + J or K will move up/down the view port without moving the cursor
+noremap <C-J> 5<C-y>
+noremap <C-K> 5<C-e>
 
 
 
-source /root/.config/nvim/cursor.vim
+"source /root/.config/nvim/cursor.vim
 
 "If you use Qwerty keyboard, uncomment the next line.
 source /root/.config/nvim/cursor_for_qwerty.vim
@@ -229,8 +229,8 @@ cnoremap <M-w> <S-Right>
 " ===
 " === Searching
 " ===
-noremap - N
-noremap = n
+"noremap - N
+"noremap = n
 
 
 " ===
@@ -238,10 +238,10 @@ noremap = n
 " ===
 " Use <space> + new arrow keys for moving the cursor around windows
 noremap <LEADER>w <C-w>w
-noremap <LEADER>u <C-w>k
-noremap <LEADER>e <C-w>j
-noremap <LEADER>n <C-w>h
-noremap <LEADER>i <C-w>l
+noremap <LEADER>k <C-w>k
+noremap <LEADER>j <C-w>j
+noremap <LEADER>h <C-w>h
+noremap <LEADER>l <C-w>l
 noremap qf <C-w>o
 
 " Disable the default s key
@@ -493,6 +493,7 @@ Plug 'tweekmonster/braceless.vim', { 'for' :['python', 'vim-plug'] }
 
 " Flutter
 Plug 'dart-lang/dart-vim-plugin'
+Plug 'f-person/pubspec-assist-nvim', { 'for' : ['pubspec.yaml'] }
 
 " Swift
 Plug 'keith/swift.vim'
@@ -735,7 +736,7 @@ vmap <C-e> <Plug>(coc-snippets-select)
 let g:coc_snippet_next = '<c-e>'
 let g:coc_snippet_prev = '<c-n>'
 imap <C-e> <Plug>(coc-snippets-expand-jump)
-let g:snips_author = 'David Chen'
+let g:snips_author = 'Bumon Guo'
 autocmd BufRead,BufNewFile tsconfig.json set filetype=jsonc
 
 
@@ -805,10 +806,10 @@ let g:Lf_PreviewCode = 1
 let g:Lf_ShowHidden = 1
 let g:Lf_ShowDevIcons = 1
 let g:Lf_CommandMap = {
-\   '<C-k>': ['<C-u>'],
-\   '<C-j>': ['<C-e>'],
-\   '<C-]>': ['<C-v>'],
-\   '<C-p>': ['<C-n>'],
+\   '<C-k>': ['<C-k>'],
+\   '<C-j>': ['<C-j>'],
+\   '<C-]>': ['<C-]>'],
+\   '<C-p>': ['<C-p>'],
 \}
 let g:Lf_UseVersionControlTool = 0
 let g:Lf_IgnoreCurrentBufferName = 1
@@ -862,10 +863,10 @@ let g:undotree_WindowLayout = 2
 let g:undotree_DiffpanelHeight = 8
 let g:undotree_SplitWidth = 24
 function g:Undotree_CustomMap()
-	nmap <buffer> u <plug>UndotreeNextState
-	nmap <buffer> e <plug>UndotreePreviousState
-	nmap <buffer> U 5<plug>UndotreeNextState
-	nmap <buffer> E 5<plug>UndotreePreviousState
+	nmap <buffer> k <plug>UndotreeNextState
+	nmap <buffer> j <plug>UndotreePreviousState
+	nmap <buffer> K 5<plug>UndotreeNextState
+	nmap <buffer> J 5<plug>UndotreePreviousState
 endfunc
 
 
@@ -890,16 +891,16 @@ endfunc
 "let g:VM_default_mappings = 0
 let g:VM_leader                     = {'default': ',', 'visual': ',', 'buffer': ','}
 let g:VM_maps                       = {}
-let g:VM_custom_motions             = {'n': 'h', 'i': 'l', 'u': 'k', 'e': 'j', 'N': '0', 'I': '$', 'h': 'e'}
-let g:VM_maps['i']                  = 'k'
-let g:VM_maps['I']                  = 'K'
+let g:VM_custom_motions             = {'h': 'h', 'l': 'l', 'k': 'k', 'j': 'j', '0': '0', '$': '$', 'e': 'e'}
+let g:VM_maps['i']                  = 'i'
+let g:VM_maps['I']                  = 'I'
 let g:VM_maps['Find Under']         = '<C-k>'
 let g:VM_maps['Find Subword Under'] = '<C-k>'
 let g:VM_maps['Find Next']          = ''
 let g:VM_maps['Find Prev']          = ''
 let g:VM_maps['Remove Region']      = 'q'
 let g:VM_maps['Skip Region']        = '<c-n>'
-let g:VM_maps["Undo"]               = 'l'
+let g:VM_maps["Undo"]               = 'u'
 let g:VM_maps["Redo"]               = '<C-r>'
 
 
@@ -1000,16 +1001,16 @@ let g:calendar_google_task = 1
 augroup calendar-mappings
 	autocmd!
 	" diamond cursor
-	autocmd FileType calendar nmap <buffer> u <Plug>(calendar_up)
-	autocmd FileType calendar nmap <buffer> n <Plug>(calendar_left)
-	autocmd FileType calendar nmap <buffer> e <Plug>(calendar_down)
-	autocmd FileType calendar nmap <buffer> i <Plug>(calendar_right)
-	autocmd FileType calendar nmap <buffer> <c-u> <Plug>(calendar_move_up)
-	autocmd FileType calendar nmap <buffer> <c-n> <Plug>(calendar_move_left)
-	autocmd FileType calendar nmap <buffer> <c-e> <Plug>(calendar_move_down)
-	autocmd FileType calendar nmap <buffer> <c-i> <Plug>(calendar_move_right)
-	autocmd FileType calendar nmap <buffer> k <Plug>(calendar_start_insert)
-	autocmd FileType calendar nmap <buffer> K <Plug>(calendar_start_insert_head)
+	autocmd FileType calendar nmap <buffer> k <Plug>(calendar_up)
+	autocmd FileType calendar nmap <buffer> h <Plug>(calendar_left)
+	autocmd FileType calendar nmap <buffer> j <Plug>(calendar_down)
+	autocmd FileType calendar nmap <buffer> l <Plug>(calendar_right)
+	autocmd FileType calendar nmap <buffer> <c-k> <Plug>(calendar_move_up)
+	autocmd FileType calendar nmap <buffer> <c-h> <Plug>(calendar_move_left)
+	autocmd FileType calendar nmap <buffer> <c-j> <Plug>(calendar_move_down)
+	autocmd FileType calendar nmap <buffer> <c-l> <Plug>(calendar_move_right)
+	autocmd FileType calendar nmap <buffer> i <Plug>(calendar_start_insert)
+	autocmd FileType calendar nmap <buffer> I <Plug>(calendar_start_insert_head)
 	" unmap <C-n>, <C-p> for other plugins
 	autocmd FileType calendar nunmap <buffer> <C-n>
 	autocmd FileType calendar nunmap <buffer> <C-p>
@@ -1306,7 +1307,7 @@ let g:move_key_modifier = 'C'
 " ===
 " === any-jump
 " ===
-nnoremap j :AnyJump<CR>
+nnoremap <LEADER>j :AnyJump<CR>
 let g:any_jump_window_width_ratio  = 0.8
 let g:any_jump_window_height_ratio = 0.9
 

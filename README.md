@@ -1,4 +1,4 @@
-## <center>[Colemak](https://colemak.com/) 用户使用的 [NeoVim](https://neovim.io) 配置文件</center>
+## <center>[QWERTY](https://colemak.com/) 用户使用的 [NeoVim](https://neovim.io) 配置文件</center>
 
 <center><img src="https://raw.githubusercontent.com/theniceboy/nvim/master/demo.png"></center>
 

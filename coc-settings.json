@@ -108,8 +108,8 @@
 	"explorer.keyMappingMode": "none",
 	"explorer.buffer.showHiddenBuffers": false,
 	"explorer.keyMappings.global": {
-		"u": "nodePrev",
-		"e": "nodeNext",
+		"k": "nodePrev",
+		"j": "nodeNext",
 		"h": "toggleSelection",
 		"<tab>": "actionMenu",
 		"gl": "expandRecursive",
@@ -128,7 +128,6 @@
 		"pp": "pasteFile",
 		"dD": "deleteForever",
 		"a": "addFile",
-		"k": "addFile",
 		"M": "addDirectory",
 		"cw": "rename",
 		".": "toggleHidden",
