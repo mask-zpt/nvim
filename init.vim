@@ -32,7 +32,7 @@ if empty(glob('~/.config/nvim/_machine_specific.vim'))
 	let has_machine_specific_file = 0
 	silent! exec "!cp ~/.config/nvim/default_configs/_machine_specific_default.vim ~/.config/nvim/_machine_specific.vim"
 endif
-source /root/.config/nvim/_machine_specific.vim
+source $HOME/.config/nvim/_machine_specific.vim
 
 
 " ====================
@@ -205,7 +205,7 @@ noremap <C-K> 5<C-e>
 "source /root/.config/nvim/cursor.vim
 
 "If you use Qwerty keyboard, uncomment the next line.
-source /root/.config/nvim/cursor_for_qwerty.vim
+source $HOME/.config/nvim/cursor_for_qwerty.vim
 
 " ===
 " === Insert Mode Cursor Movement
@@ -248,10 +248,10 @@ noremap qf <C-w>o
 noremap s <nop>
 
 " split the screens to up (horizontal), down (horizontal), left (vertical), right (vertical)
-noremap su :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
-noremap se :set splitbelow<CR>:split<CR>
-noremap sn :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
-noremap si :set splitright<CR>:vsplit<CR>
+noremap sk :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
+noremap sj :set splitbelow<CR>:split<CR>
+noremap sh :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
+noremap sl :set splitright<CR>:vsplit<CR>
 
 " Resize splits with arrow keys
 noremap <up> :res +5<CR>
@@ -279,18 +279,18 @@ noremap <LEADER>q <C-w>j:q<CR>
 noremap tu :tabe<CR>
 noremap tU :tab split<CR>
 " Move around tabs with tn and ti
-noremap tn :-tabnext<CR>
-noremap ti :+tabnext<CR>
+noremap th :-tabnext<CR>
+noremap tl :+tabnext<CR>
 " Move the tabs with tmn and tmi
-noremap tmn :-tabmove<CR>
-noremap tmi :+tabmove<CR>
+noremap tmh :-tabmove<CR>
+noremap tml :+tabmove<CR>
 
 
 " ===
 " === Markdown Settings
 " ===
 " Snippets
-source /root/.config/nvim/md-snippets.vim
+source $HOME/.config/nvim/md-snippets.vim
 " auto spell
 autocmd BufRead,BufNewFile *.md setlocal spell
 

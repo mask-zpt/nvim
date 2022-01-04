@@ -104,6 +104,7 @@
 	"explorer.file.column.indent.indentLine": true,
 	"explorer.file.showHiddenFiles": true,
 	"explorer.icon.enableNerdfont": true,
+	"explorer.previewAction.onHover":true,
 	"explorer.file.column.git.showIgnored": true,
 	"explorer.keyMappingMode": "none",
 	"explorer.buffer.showHiddenBuffers": false,
