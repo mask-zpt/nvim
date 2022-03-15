@@ -4,6 +4,7 @@
 "| |  | | | |   | |\  | \ V /  | || |  | |  _ <| |___
 "|_|  |_| |_|   |_| \_|  \_/  |___|_|  |_|_| \_\\____|
 
+
 " Author: @theniceboy
 
 " Checkout-list
@@ -396,6 +397,8 @@ call plug#begin('$HOME/.config/nvim/plugged')
 
 " Testing my own plugin
 " Plug 'theniceboy/vim-calc'
+"nerdcomenter
+Plug 'preservim/nerdcommenter'
 
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter'
