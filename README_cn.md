@@ -1,5 +1,6 @@
+
 ## <center>~~\[Colemak](https://colemak.com/) 用户使用的 [NeoVim]\(https://neovim.io) 配置文件~~</center>
-## <center>[QWERTY](https://en.wikipedia.org/wiki/QWERTY) 用户使用的 [NeoVim](https://neovim.io) 配置文件</center>
+## <center>[QWERTY](https://en.wikipedia.org/wiki/QWERTY) 用户使用的 [NeoVim](https://neovim.io) 配置文件 (切换到v1分支)</center>
 
 <center><img src="https://raw.kgithub.com/theniceboy/nvim/master/demo.png"></center>
 
