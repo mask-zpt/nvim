@@ -387,7 +387,8 @@ Plug 'theniceboy/eleline.vim', { 'branch': 'no-scrollbar' }
 "Plug 'ojroques/vim-scrollstatus'
 
 " General Highlighter
-Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
+Plug 'NvChad/nvim-colorizer.lua'
+"Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'RRethy/vim-illuminate'
 
 " File navigation
@@ -403,7 +404,8 @@ Plug 'pechorin/any-jump.vim'
 " Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c --enable-python --enable-go'}
 
 " Auto Complete
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'commit': '63dd239bfe02998810b39d039827e2510885b57b'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'neoclide/coc.nvim', {'branch': 'release', 'tag': 'v0.0.79'}
 Plug 'wellle/tmux-complete.vim'
 
@@ -465,10 +467,6 @@ Plug 'tweekmonster/braceless.vim', { 'for' :['python', 'vim-plug'] }
 "Plug 'plytophogy/vim-virtualenv', { 'for' :['python', 'vim-plug'] }
 "Plug 'tmhedberg/SimpylFold', { 'for' :['python', 'vim-plug'] }
 
-" Flutter
-Plug 'dart-lang/dart-vim-plugin'
-"Plug 'f-person/pubspec-assist-nvim', { 'for' : ['pubspec.yaml'] }
-
 " Swift
 Plug 'keith/swift.vim'
 Plug 'arzg/vim-swift'
@@ -482,6 +480,7 @@ Plug 'dkarter/bullets.vim'
 " Other filetypes
 Plug 'wlangstroth/vim-racket'
 " Plug 'jceb/vim-orgmode', {'for': ['vim-plug', 'org']}
+Plug 'hashivim/vim-terraform'
 
 " Editor Enhancement
 Plug 'petertriho/nvim-scrollbar'
@@ -490,7 +489,8 @@ Plug 'ggandor/lightspeed.nvim'
 "Plug 'Raimondi/delimitMate'
 Plug 'jiangmiao/auto-pairs'
 Plug 'mg979/vim-visual-multi'
-Plug 'tomtom/tcomment_vim' " in <space>cn to comment a line
+Plug 'theniceboy/tcomment_vim' " in <space>cn to comment a line
+" Plug 'tomtom/tcomment_vim' " in <space>cn to comment a line
 Plug 'theniceboy/antovim' " gs to switch
 Plug 'tpope/vim-surround' " type yskw' to wrap the word with '' or type cs'` to change 'word' to `word`
 Plug 'gcmt/wildfire.vim' " in Visual mode, type k' to select all text in '', or type k) k] k} kp
@@ -1376,14 +1376,33 @@ require'lightspeed'.setup {
 EOF
 endif
 
-" ==================== copilot.nvim ====================
-let g:copilot_enabled = 0
-nnoremap <silent> <leader>go :Copilot<CR>
-nnoremap <silent> <leader>ge :Copilot enable<CR>
-nnoremap <silent> <leader>gd :Copilot disable<CR>
-inoremap <c-p> <Plug>(copilot-suggest)
-inoremap <c-n> <Plug>(copilot-next)
-inoremap <c-l> <Plug>(copilot-previous)
+" ==================== nvim-colorizer.lua ====================
+lua <<EOF
+require("colorizer").setup {
+	filetypes = { "*" },
+	user_default_options = {
+		RGB = true, -- #RGB hex codes
+		RRGGBB = true, -- #RRGGBB hex codes
+		names = true, -- "Name" codes like Blue or blue
+		RRGGBBAA = false, -- #RRGGBBAA hex codes
+		AARRGGBB = true, -- 0xAARRGGBB hex codes
+		rgb_fn = false, -- CSS rgb() and rgba() functions
+		hsl_fn = false, -- CSS hsl() and hsla() functions
+		css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+		css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+		-- Available modes for `mode`: foreground, background,  virtualtext
+		mode = "virtualtext", -- Set the display mode.
+		-- Available methods are false / true / "normal" / "lsp" / "both"
+		-- True is same as normal
+		tailwind = false, -- Enable tailwind colors
+		-- parsers can contain values used in |user_default_options|
+		sass = { enable = false, parsers = { css }, }, -- Enable sass colors
+		virtualtext = "■",
+	},
+	-- all the sub-options of filetypes apply to buftypes
+	buftypes = {},
+}
+EOF
 
 " ===================== End of Plugin Settings =====================
 
