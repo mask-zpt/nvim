@@ -25,7 +25,7 @@ if empty(glob($HOME.'/.config/nvim/plugged/wildfire.vim/autoload/wildfire.vim'))
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" Create a _machine_specific.vim file to adjust machine specific stuff, like python interpreter location 
+" Create a _machine_specific.vim file to adjust machine specific stuff, like python interpreter location
 let has_machine_specific_file = 1
 if empty(glob('~/.config/nvim/_machine_specific.vim'))
 	let has_machine_specific_file = 0
@@ -33,15 +33,21 @@ if empty(glob('~/.config/nvim/_machine_specific.vim'))
 endif
 source $HOME/.config/nvim/_machine_specific.vim
 
+
 " ==================== Editor behavior ====================
+" ===
+" === System
+" ===
 "set clipboard=unnamedplus
 let &t_ut=''
 set autochdir
+
 set exrc
 set secure
 set number
 set relativenumber
 set cursorline
+"set hidden
 set noexpandtab
 set tabstop=2
 set shiftwidth=2
@@ -63,12 +69,15 @@ set formatoptions-=tc
 set splitright
 set splitbelow
 set noshowmode
+"set showcmd
+"set wildmenu
 set ignorecase
 set smartcase
 set shortmess+=c
 set inccommand=split
 set completeopt=longest,noinsert,menuone,noselect,preview
-set lazyredraw
+"set ttyfast "should make scrolling faster
+set lazyredraw "same as above
 set visualbell
 silent !mkdir -p $HOME/.config/nvim/tmp/backup
 silent !mkdir -p $HOME/.config/nvim/tmp/undo
@@ -106,24 +115,43 @@ augroup NVIMRC
     autocmd BufWritePost *.nvimrc exec ":so %"
 augroup END
 " Undo operations
-noremap l u
+"noremap l u
+
 " Insert Key
-noremap k i
-noremap K I
+"noremap k i
+"noremap K I
+
+" make Y to copy till the end of the line
+nnoremap Y y$
+
 " Copy to system clipboard
 vnoremap Y "+y
+
+" Indentation
+nnoremap < <<
+nnoremap > >>
+
 " Find pair
 noremap ,. %
 vnoremap ki $%
+
+" Delete find pair
+nnoremap dy d%
+
 " Search
 noremap <LEADER><CR> :nohlsearch<CR>
+
 " Adjacent duplicate words
 noremap <LEADER>dw /\(\<\w\+\>\)\_s*\1
+
 " Space to Tab
 nnoremap <LEADER>tt :%s/    /\t/g
 vnoremap <LEADER>tt :s/    /\t/g
+
 " Folding
 noremap <silent> <LEADER>o za
+
+" nnoremap <c-n> :tabe<CR>:-tabmove<CR>:term lazynpm<CR>
 
 " insert a pair of {} and go to the next line
 inoremap <c-y> <ESC>A {}<ESC>i<CR><ESC>ko
@@ -131,36 +159,44 @@ inoremap <c-y> <ESC>A {}<ESC>i<CR><ESC>ko
 " ==================== Cursor Movement ====================
 " New cursor movement (the default arrow keys are used for resizing windows)
 "     ^
-"     u
-" < n   i >
-"     e
+"     k
+" < h   l >
+"     j
 "     v
-noremap <silent> u k
-noremap <silent> n h
-noremap <silent> e j
-noremap <silent> i l
-noremap <silent> gu gk
-noremap <silent> ge gj
+noremap <silent> k k
+noremap <silent> h h
+noremap <silent> j j
+noremap <silent> l l
+noremap <silent> gk gk
+noremap <silent> gj gj
 noremap <silent> \v v$h
-" U/E keys for 5 times u/e (faster navigation)
-noremap <silent> U 5k
-noremap <silent> E 5j
+
+" K/J keys for 5 times k/j (faster navigation)
+noremap <silent> K 5k
+noremap <silent> J 5j
+
 " N key: go to the start of the line
-noremap <silent> N 0
+"noremap <silent> N 0
 " I key: go to the end of the line
-noremap <silent> I $
+"noremap <silent> I $
+
 " Faster in-line navigation
 noremap W 5w
 noremap B 5b
+
 " set h (same as n, cursor left) to 'end of word'
-noremap h e
-" Ctrl + U or E will move up/down the view port without moving the cursor
-noremap <C-U> 5<C-y>
-noremap <C-E> 5<C-e>
-" Custom cursor movement
-source $HOME/.config/nvim/cursor.vim
+"noremap h e
+
+" Ctrl + J or K will move up/down the view port without moving the cursor
+noremap <C-J> 5<C-y>
+noremap <C-K> 5<C-e>
+
+
+
+"source /root/.config/nvim/cursor.vim
+
 " If you use Qwerty keyboard, uncomment the next line.
-" source $HOME/nvim/cursor_for_qwerty.vim
+source $HOME/.config/nvim/cursor_for_qwerty.vim
 
 
 " ==================== Insert Mode Cursor Movement ====================
@@ -181,30 +217,36 @@ cnoremap <M-w> <S-Right>
 " ==================== Window management ====================
 " Use <space> + new arrow keys for moving the cursor around windows
 noremap <LEADER>w <C-w>w
-noremap <LEADER>u <C-w>k
-noremap <LEADER>e <C-w>j
-noremap <LEADER>n <C-w>h
-noremap <LEADER>i <C-w>l
+noremap <LEADER>k <C-w>k
+noremap <LEADER>j <C-w>j
+noremap <LEADER>h <C-w>h
+noremap <LEADER>l <C-w>l
 noremap qf <C-w>o
+
 " Disable the default s key
 noremap s <nop>
+
 " split the screens to up (horizontal), down (horizontal), left (vertical), right (vertical)
-noremap su :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
-noremap se :set splitbelow<CR>:split<CR>
-noremap sn :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
-noremap si :set splitright<CR>:vsplit<CR>
+noremap sk :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
+noremap sj :set splitbelow<CR>:split<CR>
+noremap sh :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
+noremap sl :set splitright<CR>:vsplit<CR>
+
 " Resize splits with arrow keys
 noremap <up> :res +5<CR>
 noremap <down> :res -5<CR>
 noremap <left> :vertical resize-5<CR>
 noremap <right> :vertical resize+5<CR>
+
 " Place the two screens up and down
 noremap sh <C-w>t<C-w>K
 " Place the two screens side by side
 noremap sv <C-w>t<C-w>H
+
 " Rotate screens
 noremap srh <C-w>b<C-w>K
 noremap srv <C-w>b<C-w>H
+
 " Press <SPACE> + q to close the window below the current window
 noremap <LEADER>q <C-w>j:q<CR>
 
@@ -214,11 +256,11 @@ noremap <LEADER>q <C-w>j:q<CR>
 noremap tu :tabe<CR>
 noremap tU :tab split<CR>
 " Move around tabs with tn and ti
-noremap tn :-tabnext<CR>
-noremap ti :+tabnext<CR>
+noremap th :-tabnext<CR>
+noremap tl :+tabnext<CR>
 " Move the tabs with tmn and tmi
-noremap tmn :-tabmove<CR>
-noremap tmi :+tabmove<CR>
+noremap tmh :-tabmove<CR>
+noremap tml :+tabmove<CR>
 
 
 " ==================== Markdown Settings ====================
@@ -231,28 +273,38 @@ autocmd BufRead,BufNewFile *.md setlocal spell
 " ==================== Other useful stuff ====================
 " Open a new instance of st with the cwd
 nnoremap \t :tabe<CR>:-tabmove<CR>:term sh -c 'st'<CR><C-\><C-N>:q<CR>
+
 " Opening a terminal window
 noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res +10<CR>:term<CR>
+
 " Press space twice to jump to the next '<++>' and edit it
 noremap <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>"_c4l
 " Spelling Check with <space>sc
 noremap <LEADER>sc :set spell!<CR>
+
 " Press ` to change case (instead of ~)
 noremap ` ~
+
 noremap <C-c> zz
+
 " Auto change directory to current dir
 autocmd BufEnter * silent! lcd %:p:h
+
 " Call figlet
-noremap tx :r !figlet 
+noremap tx :r !figlet
+
 " find and replace
 noremap \s :%s//g<left><left>
+
 " set wrap
 noremap <LEADER>sw :set wrap<CR>
+
 " press f10 to show hlgroup
 " function! SynGroup()
 " 	let l:s = synID(line('.'), col('.'), 1)
 " 	echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
 " endfun
+"map <F10> :call SynGroup()<CR>
 map <F10> :TSHighlightCapturesUnderCursor<CR>
 
 " Compile function
@@ -319,8 +371,8 @@ call plug#begin('$HOME/.config/nvim/plugged')
 
 Plug 'itchyny/vim-cursorword'
 
-" Github Copilot
-Plug 'github/copilot.vim'
+"nerdcomenter
+"Plug 'preservim/nerdcommenter'
 
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter'
@@ -332,6 +384,7 @@ Plug 'theniceboy/nvim-deus'
 
 " Status line
 Plug 'theniceboy/eleline.vim', { 'branch': 'no-scrollbar' }
+"Plug 'ojroques/vim-scrollstatus'
 
 " General Highlighter
 Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
@@ -341,6 +394,7 @@ Plug 'RRethy/vim-illuminate'
 Plug 'ibhagwan/fzf-lua'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+"Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 Plug 'kevinhwang91/rnvimr'
 Plug 'airblade/vim-rooter'
 Plug 'pechorin/any-jump.vim'
@@ -365,6 +419,7 @@ Plug 'theniceboy/vim-gitignore', { 'for': ['gitignore', 'vim-plug'] }
 Plug 'theniceboy/fzf-gitignore', { 'do': ':UpdateRemotePlugins' }
 "Plug 'mhinz/vim-signify'
 Plug 'lewis6991/gitsigns.nvim'
+"Plug 'airblade/vim-gitgutter'
 Plug 'cohama/agit.vim'
 Plug 'kdheepak/lazygit.nvim'
 
@@ -412,6 +467,7 @@ Plug 'tweekmonster/braceless.vim', { 'for' :['python', 'vim-plug'] }
 
 " Flutter
 Plug 'dart-lang/dart-vim-plugin'
+"Plug 'f-person/pubspec-assist-nvim', { 'for' : ['pubspec.yaml'] }
 
 " Swift
 Plug 'keith/swift.vim'
@@ -441,6 +497,7 @@ Plug 'gcmt/wildfire.vim' " in Visual mode, type k' to select all text in '', or 
 Plug 'junegunn/vim-after-object' " da= to delete what's after =
 Plug 'godlygeek/tabular' " ga, or :Tabularize <regex> to align
 Plug 'tpope/vim-capslock'	" Ctrl+L (insert) to toggle capslock
+"Plug 'easymotion/vim-easymotion'
 " Plug 'Konfekt/FastFold'
 "Plug 'junegunn/vim-peekaboo'
 "Plug 'wellle/context.vim'
@@ -464,6 +521,7 @@ Plug 'reedes/vim-wordy'
 " Find & Replace
 Plug 'nvim-lua/plenary.nvim' " nvim-spectre dep
 Plug 'nvim-pack/nvim-spectre'
+"Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'] }
 
 " Documentation
 " Plug 'KabbAmine/zeavim.vim' " <LEADER>z to find doc
@@ -492,6 +550,7 @@ call plug#end()
 
 set re=0
 
+" ===================== Start of Plugin Settings =====================
 
 " ==================== Dress up my vim ====================
 set termguicolors " enable true colors support
@@ -505,6 +564,25 @@ hi NonText ctermfg=gray guifg=grey10
 " ==================== eleline.vim ====================
 let g:airline_powerline_fonts = 0
 
+
+"""" ==
+"""" == GitGutter
+"""" ==
+"""" let g:gitgutter_signs = 0
+"""let g:gitgutter_sign_allow_clobber = 0
+"""let g:gitgutter_map_keys = 0
+"""let g:gitgutter_override_sign_column_highlight = 0
+"""let g:gitgutter_preview_win_floating = 1
+"""let g:gitgutter_sign_added = '▎'
+"""let g:gitgutter_sign_modified = '░'
+"""let g:gitgutter_sign_removed = '▏'
+"""let g:gitgutter_sign_removed_first_line = '▔'
+"""let g:gitgutter_sign_modified_removed = '▒'
+"""" autocmd BufWritePost * GitGutter
+"""nnoremap <LEADER>gf :GitGutterFold<CR>
+"""nnoremap H :GitGutterPreviewHunk<CR>
+"""nnoremap <LEADER>g- :GitGutterPrevHunk<CR>
+"""nnoremap <LEADER>g= :GitGutterNextHunk<CR>
 
 " ==================== gitsigns.nvim ====================
 lua <<EOF
@@ -524,7 +602,6 @@ nnoremap <LEADER>gr :Gitsigns reset_hunk<CR>
 nnoremap <LEADER>gb :Gitsigns blame_line<CR>
 nnoremap <LEADER>g- :Gitsigns prev_hunk<CR>
 nnoremap <LEADER>g= :Gitsigns next_hunk<CR>
-
 
 " ==================== coc.nvim ====================
 let g:coc_global_extensions = [
@@ -557,6 +634,8 @@ let g:coc_global_extensions = [
 	\ 'coc-vimlsp',
 	\ 'coc-yaml',
 	\ 'coc-yank']
+"	,
+"	\ 'https://github.com/rodrigore/coc-tailwind-intellisense']
 inoremap <silent><expr> <TAB>
       \ coc#pum#visible() ? coc#pum#next(1) :
       \ CheckBackspace() ? "\<Tab>" :
@@ -630,6 +709,7 @@ vmap <C-e> <Plug>(coc-snippets-select)
 let g:coc_snippet_next = '<c-e>'
 let g:coc_snippet_prev = '<c-n>'
 imap <C-e> <Plug>(coc-snippets-expand-jump)
+"let g:snips_author = 'David Chen'
 autocmd BufRead,BufNewFile tsconfig.json set filetype=jsonc
 
 
@@ -650,6 +730,15 @@ let g:table_mode_cell_text_object_i_map = 'k<Bar>'
 
 
 " ==================== FZF ====================
+"""nnoremap <c-p> :Leaderf file<CR>
+"""" noremap <silent> <C-p> :Files<CR>
+"""noremap <silent> <C-f> :Rg<CR>
+"""noremap <silent> <C-h> :History<CR>
+""""noremap <C-t> :BTags<CR>
+""""noremap <silent> <C-l> :Lines<CR>
+"""noremap <silent> <C-w> :Buffers<CR>
+"""noremap <leader>; :History:<CR>
+
 let g:fzf_preview_window = 'right:40%'
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
@@ -674,6 +763,28 @@ noremap <c-d> :BD<CR>
 
 let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.95 } }
 
+"""" ===
+"""" === Leaderf
+"""" ===
+"""" let g:Lf_WindowPosition = 'popup'
+"""let g:Lf_PreviewInPopup = 1
+"""let g:Lf_PreviewCode = 1
+"""let g:Lf_ShowHidden = 1
+"""let g:Lf_ShowDevIcons = 1
+"""let g:Lf_CommandMap = {
+"""\   '<C-k>': ['<C-k>'],
+"""\   '<C-j>': ['<C-j>'],
+"""\   '<C-]>': ['<C-]>'],
+"""\   '<C-p>': ['<C-p>'],
+"""\}
+"""let g:Lf_UseVersionControlTool = 0
+"""let g:Lf_IgnoreCurrentBufferName = 1
+"""let g:Lf_WildIgnore = {
+"""        \ 'dir': ['.git', 'vendor', 'node_modules'],
+"""        \ 'file': ['__vim_project_root', 'class']
+"""        \}
+"""let g:Lf_UseMemoryCache = 0
+"""let g:Lf_UseCache = 0
 
 " ==================== CTRLP (Dependency for omnisharp) ====================
 let g:ctrlp_map = ''
@@ -696,10 +807,10 @@ let g:undotree_WindowLayout = 2
 let g:undotree_DiffpanelHeight = 8
 let g:undotree_SplitWidth = 24
 function g:Undotree_CustomMap()
-	nmap <buffer> u <plug>UndotreeNextState
-	nmap <buffer> e <plug>UndotreePreviousState
-	nmap <buffer> U 5<plug>UndotreeNextState
-	nmap <buffer> E 5<plug>UndotreePreviousState
+	nmap <buffer> k <plug>UndotreeNextState
+	nmap <buffer> j <plug>UndotreePreviousState
+	nmap <buffer> K 5<plug>UndotreeNextState
+	nmap <buffer> J 5<plug>UndotreePreviousState
 endfunc
 
 
@@ -708,18 +819,26 @@ endfunc
 "let g:VM_default_mappings = 0
 let g:VM_leader                     = {'default': ',', 'visual': ',', 'buffer': ','}
 let g:VM_maps                       = {}
-let g:VM_custom_motions             = {'n': 'h', 'i': 'l', 'u': 'k', 'e': 'j', 'N': '0', 'I': '$', 'h': 'e'}
-let g:VM_maps['i']                  = 'k'
-let g:VM_maps['I']                  = 'K'
+let g:VM_custom_motions             = {'h': 'h', 'l': 'l', 'k': 'k', 'j': 'j', '0': '0', '$': '$', 'e': 'e'}
+let g:VM_maps['i']                  = 'i'
+let g:VM_maps['I']                  = 'I'
 let g:VM_maps['Find Under']         = '<C-k>'
 let g:VM_maps['Find Subword Under'] = '<C-k>'
 let g:VM_maps['Find Next']          = ''
 let g:VM_maps['Find Prev']          = ''
 let g:VM_maps['Remove Region']      = 'q'
 let g:VM_maps['Skip Region']        = '<c-n>'
-let g:VM_maps["Undo"]               = 'l'
+let g:VM_maps["Undo"]               = 'u'
 let g:VM_maps["Redo"]               = '<C-r>'
 
+
+"""" ===
+"""" === Far.vim
+"""" ===
+"""noremap <LEADER>f :F  **/*<left><left><left><left><left>
+"""let g:far#mapping = {
+"""		\ "replace_undo" : ["l"],
+"""		\ }
 
 " ==================== nvim-spectre ====================
 nnoremap <LEADER>f <cmd>lua require('spectre').open()<CR>
@@ -735,6 +854,27 @@ let g:bullets_enabled_file_types = [
 			\ 'scratch'
 			\]
 
+
+"""" ===
+"""" === Vista.vim
+"""" ===
+"""noremap <LEADER>v :Vista!!<CR>
+"""noremap <c-t> :silent! Vista finder coc<CR>
+"""let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+"""let g:vista_default_executive = 'coc'
+"""let g:vista_fzf_preview = ['right:50%']
+"""let g:vista#renderer#enable_icon = 1
+"""let g:vista#renderer#icons = {
+"""\   "function": "\uf794",
+"""\   "variable": "\uf71b",
+"""\  }
+"""" function! NearestMethodOrFunction() abort
+"""" 	return get(b:, 'vista_nearest_method_or_function', '')
+"""" endfunction
+"""" set statusline+=%{NearestMethodOrFunction()}
+"""" autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+
+let g:scrollstatus_size = 15
 
 " ==================== fzf-gitignore ====================
 noremap <LEADER>gi :FzfGitignore<CR>
@@ -755,6 +895,18 @@ noremap <LEADER>gi :FzfGitignore<CR>
 " augroup END
 
 
+
+"""" ===
+"""" === vimtex
+"""" ===
+""""let g:vimtex_view_method = ''
+"""let g:vimtex_view_general_viewer = 'llpp'
+"""let g:vimtex_mappings_enabled = 0
+"""let g:vimtex_text_obj_enabled = 0
+"""let g:vimtex_motion_enabled = 0
+"""let maplocalleader=' '
+
+
 " ==================== vim-calendar ====================
 "noremap \c :Calendar -position=here<CR>
 noremap \\ :Calendar -view=clock -position=here<CR>
@@ -763,16 +915,16 @@ let g:calendar_google_task = 1
 augroup calendar-mappings
 	autocmd!
 	" diamond cursor
-	autocmd FileType calendar nmap <buffer> u <Plug>(calendar_up)
-	autocmd FileType calendar nmap <buffer> n <Plug>(calendar_left)
-	autocmd FileType calendar nmap <buffer> e <Plug>(calendar_down)
-	autocmd FileType calendar nmap <buffer> i <Plug>(calendar_right)
-	autocmd FileType calendar nmap <buffer> <c-u> <Plug>(calendar_move_up)
-	autocmd FileType calendar nmap <buffer> <c-n> <Plug>(calendar_move_left)
-	autocmd FileType calendar nmap <buffer> <c-e> <Plug>(calendar_move_down)
-	autocmd FileType calendar nmap <buffer> <c-i> <Plug>(calendar_move_right)
-	autocmd FileType calendar nmap <buffer> k <Plug>(calendar_start_insert)
-	autocmd FileType calendar nmap <buffer> K <Plug>(calendar_start_insert_head)
+	autocmd FileType calendar nmap <buffer> k <Plug>(calendar_up)
+	autocmd FileType calendar nmap <buffer> h <Plug>(calendar_left)
+	autocmd FileType calendar nmap <buffer> j <Plug>(calendar_down)
+	autocmd FileType calendar nmap <buffer> l <Plug>(calendar_right)
+	autocmd FileType calendar nmap <buffer> <c-k> <Plug>(calendar_move_up)
+	autocmd FileType calendar nmap <buffer> <c-h> <Plug>(calendar_move_left)
+	autocmd FileType calendar nmap <buffer> <c-j> <Plug>(calendar_move_down)
+	autocmd FileType calendar nmap <buffer> <c-l> <Plug>(calendar_move_right)
+	autocmd FileType calendar nmap <buffer> i <Plug>(calendar_start_insert)
+	autocmd FileType calendar nmap <buffer> I <Plug>(calendar_start_insert_head)
 	" unmap <C-n>, <C-p> for other plugins
 	autocmd FileType calendar nunmap <buffer> <C-n>
 	autocmd FileType calendar nunmap <buffer> <C-p>
@@ -824,6 +976,23 @@ autocmd Filetype cs nnoremap <buffer> <LEADER>rn :OmniSharpRename<CR><C-N>:res +
 sign define OmniSharpCodeActions text=💡
 let g:coc_sources_disable_map = { 'cs': ['cs', 'cs-1', 'cs-2', 'cs-3'] }
 
+"""" ===
+"""" === vim-easymotion
+"""" ===
+"""let g:EasyMotion_do_mapping = 0
+"""let g:EasyMotion_do_shade = 0
+"""let g:EasyMotion_smartcase = 1
+""""map ' <Plug>(easymotion-overwin-f2)
+""""nmap ' <Plug>(easymotion-overwin-f2)
+""""map E <Plug>(easymotion-j)
+""""map U <Plug>(easymotion-k)
+""""nmap f <Plug>(easymotion-overwin-f)
+""""map \; <Plug>(easymotion-prefix)
+""""nmap ' <Plug>(easymotion-overwin-f2)
+""""map 'l <Plug>(easymotion-bd-jk)
+""""nmap 'l <Plug>(easymotion-overwin-line)
+""""map  'w <Plug>(easymotion-bd-w)
+""""nmap 'w <Plug>(easymotion-overwin-w)
 
 " ==================== goyo ====================
 map <LEADER>gy :Goyo<CR>
@@ -855,6 +1024,24 @@ noremap to :XTabCycleMode<CR>
 noremap \p :echo expand('%:p')<CR>
 
 
+" ===
+" === vim-session
+" ===
+"let g:session_directory = $HOME."/.config/nvim/tmp/sessions"
+"let g:session_autosave = 'no'
+"let g:session_autoload = 'no'
+"let g:session_command_aliases = 1
+"set sessionoptions-=buffers
+"set sessionoptions-=options
+"noremap sl :OpenSession<CR>
+"noremap sS :SaveSession<CR>
+"noremap ss :SaveSession
+"noremap sc :SaveSession<CR>:CloseSession<CR>:q<CR>
+"noremap so :OpenSession default<CR>
+"noremap sD :DeleteSession<CR>
+""noremap sA :AppendTabSession<CR>
+
+
 " ==================== context.vim ====================
 "let g:context_add_mappings = 0
 "noremap <leader>ct :ContextToggle<CR>
@@ -880,6 +1067,14 @@ command! -bang -nargs=* LoadVimSpectorJsonTemplate call fzf#run({
 sign define vimspectorBP text=☛ texthl=Normal
 sign define vimspectorBPDisabled text=☞ texthl=Normal
 sign define vimspectorPC text=🔶 texthl=SpellBad
+
+
+" ===
+" === reply.vim
+" ===
+"noremap <LEADER>rp :w<CR>:Repl<CR><C-\><C-N><C-w><C-h>
+"noremap <LEADER>rs :ReplSend<CR><C-w><C-l>a<CR><C-\><C-N><C-w><C-h>
+"noremap <LEADER>rt :ReplStop<CR>
 
 
 " ==================== vim-markdown-toc ====================
@@ -956,7 +1151,7 @@ let g:move_key_modifier = 'C'
 
 
 " ==================== any-jump ====================
-nnoremap j :AnyJump<CR>
+nnoremap <LEADER>j :AnyJump<CR>
 let g:any_jump_window_width_ratio  = 0.8
 let g:any_jump_window_height_ratio = 0.9
 
@@ -1190,6 +1385,7 @@ inoremap <c-p> <Plug>(copilot-suggest)
 inoremap <c-n> <Plug>(copilot-next)
 inoremap <c-l> <Plug>(copilot-previous)
 
+" ===================== End of Plugin Settings =====================
 
 " ==================== Terminal Colors ====================
 let g:terminal_color_0  = '#000000'
